@@ -5,12 +5,14 @@ from .models.commercials_model import Commercial
 from .models.task_model import Task
 from .models.activity_log_model import ActivityLog
 from .models.event_model import Event
+from .models.interaction_model import Interaction
 from .models import Opportunity
 
 # Register your models here.
 admin.site.register(Commercial)
 admin.site.register(ActivityLog)
 admin.site.register(Event)
+admin.site.register(Interaction)
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
@@ -32,7 +34,7 @@ class OpportunityAdmin(admin.ModelAdmin):
     )
 
 @admin.register(Task)
-class Task(admin.ModelAdmin):
+class TaskAdmin(admin.ModelAdmin):
 	list_display = (
         'comercial',
         'title',
