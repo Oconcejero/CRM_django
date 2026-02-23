@@ -12,7 +12,7 @@ from .models import Opportunity
 admin.site.register(Commercial)
 admin.site.register(ActivityLog)
 admin.site.register(Event)
-admin.site.register(Interaction)
+
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
@@ -55,5 +55,5 @@ class ClientAdmin(admin.ModelAdmin):
     )
 
 @admin.register(Interaction)
-class InteracionAdmin(admin.ModelAdmin):
+class InteractionAdmin(admin.ModelAdmin):
     pass
