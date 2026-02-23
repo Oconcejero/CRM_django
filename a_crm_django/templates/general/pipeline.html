@@ -1,0 +1,81 @@
+{% extends "general/layout.html" %}
+{% load static%}
+{% block page_content %}
+<link rel="stylesheet" href="{% static 'css/pipeline.css' %}">
+
+
+<div class="kanban">
+  {% for estado, ops in columnas.items %}
+  <div class="kanban-column" data-estado="{{ estado }}" ondragover="allowDrop(event)"
+    ondrop="dropCard(event, '{{ estado }}')">
+
+    <h3>{{ estado }}</h3>
+
+    {% for op in ops %}
+    <div class="kanban-card" draggable="true" ondragstart="dragCard(event)" data-id="{{ op.id }}">
+      <strong>{{ op.nombre }}</strong><br>
+      {{ op.valor }} €
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+<script>
+  let draggedCard = null;
+  let placeholder = document.createElement("div");
+  placeholder.className = "placeholder";
+
+  function dragCard(event) {
+    draggedCard = event.target;
+    event.dataTransfer.effectAllowed = "move";
+  }
+
+  function allowDrop(event) {
+    event.preventDefault();
+
+    const column = event.currentTarget;
+
+    if (!column.querySelector(".placeholder")) {
+      column.appendChild(placeholder);
+    }
+  }
+
+  function dropCard(event, nuevoEstado) {
+    event.preventDefault();
+
+    const column = event.currentTarget;
+
+    column.appendChild(draggedCard);
+
+    if (placeholder.parentNode) {
+      placeholder.parentNode.removeChild(placeholder);
+    }
+
+    const id = draggedCard.dataset.id;
+
+    fetch(`/update-opportunity-state/${id}/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `estado=${nuevoEstado}`
+    });
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.startsWith(name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
+{% endblock %}

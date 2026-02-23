@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <title>Login</title>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <h1>Acceso comerciales</h1>
+    <form class="formulario" method="post">
+      {% csrf_token %}
+      <div class="login-campo">
+        <label>Email:</label>
+        <input type="email" name="email" required verbose>
+      </div>
+
+      <div class="login-campo">
+        <label>Contraseña:</label>
+        <input type="password" name="password" required>
+      </div>
+
+      <button class="login-button" type="submit">Entrar</button>
+    </form>
+
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+
+</body>
+
+</html>

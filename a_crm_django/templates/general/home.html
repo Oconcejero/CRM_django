@@ -1,0 +1,132 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block page_content %}
+<div class="dashboard">
+  <div class="buttons-actions">
+    <a href="{% url 'add_opportunity' %}" class="btn btn-primary">
+      Añadir venta
+    </a>
+    <a href="{% url 'add_task' %}" class="btn btn-primary">
+      Añadir tarea
+    </a>
+    <a href="{% url 'pipeline' %}" class="btn btn-primary">
+      Pipeline
+    </a>
+    <a href="{% url 'add_client' %}" class="btn btn-primary">
+      Añadir cliente
+    </a>
+
+  </div>
+
+  <!-- SECCIONES SUPERIORES -->
+
+  <div class="cards">
+    <div class="card">
+      <h3>{{ abiertas }} €</h3>
+      <p>Abiertas</p>
+    </div>
+    <div class="card">
+      <h3>{{ en_curso }} €</h3>
+      <p>En curso</p>
+    </div>
+    <div class="card">
+      <h3>{{ propuesta }} €</h3>
+      <p>Propuesta</p>
+    </div>
+    <div class="card">
+      <h3>{{ ganadas }} €</h3>
+      <p>Ganadas</p>
+    </div>
+    <div class="card">
+      <h3>{{ perdidas }} €</h3>
+      <p>Perdidas</p>
+    </div>
+    <div class="card">
+      <h3>{{ pipeline_total }} €</h3>
+      <p>Pipeline total</p>
+    </div>
+    <div class="card">
+      <h3>{{ total_clientes }}</h3>
+      <p>Clientes</p>
+    </div>
+
+  </div>
+
+  <!-- GRÁFICOS -->
+
+  <div class="charts">
+    <div class="chart-box">
+      <h3>Ventas este año</h3>
+      <canvas id="ventasChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h3>Prospectos por origen</h3>
+      <canvas id="prospectosChart"></canvas>
+    </div>
+  </div>
+
+
+  <!-- SECCIONES INFERIORES -->
+
+  <div class="bottom-sections">
+    <div class="section">
+      <h3>Tareas</h3>
+      <ul>
+        {% for tarea in tareas %}
+        <li>{{ tarea.title }} — {{ tarea.due_date }} {{ tarea.due_time }}</li>
+        {% empty %}
+        <li>No tienes tareas pendientes</li>
+        {% endfor %}
+      </ul>
+
+    </div>
+
+    <div class="section">
+      <h3>Actividad reciente</h3>
+      <ul>
+        {% for act in actividad %}
+        <li>{{ act }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+
+
+</div>
+{{ meses|json_script:"meses_json" }}
+{{ ventas|json_script:"ventas_json" }}
+{{ origen_labels|json_script:"origen_labels_json" }}
+{{ origen_data|json_script:"origen_data_json" }}
+
+<script>
+  const ventasCtx = document.getElementById('ventasChart');
+  new Chart(ventasCtx, {
+    type: 'bar',
+    data: {
+      labels: JSON.parse(document.getElementById('meses_json').textContent),
+      datasets: [{
+        label: 'Ventas',
+        data: JSON.parse(document.getElementById('ventas_json').textContent),
+        backgroundColor: '#4e73df'
+      }]
+    }
+  });
+
+  const prospectosCtx = document.getElementById('prospectosChart');
+  new Chart(prospectosCtx, {
+    type: 'pie',
+    data: {
+      labels: JSON.parse(document.getElementById('origen_labels_json').textContent),
+      datasets: [{
+        data: JSON.parse(document.getElementById('origen_data_json').textContent),
+        backgroundColor: ['#1cc88a', '#36b9cc', '#f6c23e']
+      }]
+    }
+  });
+
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+body {
+  background-color: rgb(207, 207, 207);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container_add_client h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.container_add_client {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.labels_add_client {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #333;
+  color: white;
+  padding: 40px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.labels_add_client label {
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.labels_add_client input,
+.labels_add_client select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.labels_add_client button {
+  padding: 12px;
+  background-color: #ffcc00;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.labels_add_client button:hover {
+  background-color: #9c7f0c;
+}

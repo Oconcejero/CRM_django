@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <button class="nav-toggle" id="navToggle">☰</button>
+
+  <ul class="menu-inicio" id="navMenu">
+    <li class="{% if request.path == '/' or request.path == '/home/' %}active{% endif %}">
+      <a href="{% url 'home' %}">Home</a>
+    </li>
+
+    <li class="{% if request.path == '/client/' %}active{% endif %}">
+      <a href="{% url 'client' %}">Clientes</a>
+    </li>
+
+    <li class="{% if request.path == '/company/' %}active{% endif %}">
+      <a href="{% url 'company' %}">Compañías</a>
+    </li>
+
+    <li class="{% if request.path == '/commercial/' %}active{% endif %}">
+      <a href="{% url 'commercial' %}">Comerciales</a>
+    </li>
+
+    {% if request.session.commercial_id %}
+    <li class="{% if request.path == '/logout/' %}active{% endif %}">
+      <a href="{% url 'commercial_logout' %}">Logout</a>
+    </li>
+    {% endif %}
+  </ul>
+  {% if request.user.is_authenticated %}
+  <p class="nombre-comercial">
+    {{ request.user.commercial.user.username }}
+  </p>
+  {% endif %}
+</nav>

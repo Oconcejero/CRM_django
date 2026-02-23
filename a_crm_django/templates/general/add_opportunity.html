@@ -1,0 +1,16 @@
+{% extends "general/layout.html" %}
+{% block page_content %}
+
+<div class="form-container">
+  <div class="form-box">
+    <h2>Nueva Oportunidad</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

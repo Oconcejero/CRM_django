@@ -1,0 +1,89 @@
+body {
+  background-color: rgb(207, 207, 207);
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+}
+
+.navbar {
+  background: #333;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+.menu-inicio {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 25px;
+}
+
+.menu-inicio a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.menu-inicio li.active a {
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 3px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .menu-inicio {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #333;
+    margin-top: 15px;
+    padding: 10px 0;
+  }
+
+  .menu-inicio.open {
+    display: flex;
+  }
+
+  .menu-inicio li {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .menu-inicio {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.nombre-comercial {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}

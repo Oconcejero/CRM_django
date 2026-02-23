@@ -1,0 +1,43 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Add_Client{% endblock %}
+
+{% block page_content %}
+<div class="container_add_client">
+  <div class="labels_add_client">
+    <h2>Añadir cliente</h2>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="id_title">Nombre</label>
+      {{ form.first_name }}
+
+      <label for="id_title">Apellido</label>
+      {{ form.last_name }}
+
+      <label for="id_title">Email</label>
+      {{ form.email }}
+
+      <label for="id_title">Teléfono</label>
+      {{ form.phone }}
+
+      <label for="id_title">Compañía</label>
+      {{ form.company_name }}
+
+      <label for="id_title">Origen</label>
+      {{ form.origen }}
+
+      <label for="id_title">Comercial</label>
+      {{ form.comercial }}
+      <div class="buttons-row">
+
+        <button type="submit" class="btn-primary">Guardar</button>
+
+        <a href="{% url 'home' %}" class="btn-primary">
+          Volver
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

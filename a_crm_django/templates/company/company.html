@@ -1,0 +1,16 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Company{% endblock %}
+{% block Header_title %}COMPANY{% endblock %}
+{% block page_content%}
+
+<div class="container-company">
+  {% for company in companys%}
+  <article class="company" id="{{company.id}}">
+    <h2>{{company.name}}</h2>
+    <p>{{company.address}}</p>
+    <p>{{company.phone}}</p>
+  </article>
+  {% endfor %}
+  {% endblock %}
+</div>

@@ -1,0 +1,26 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Reasignar cliente{% endblock %}
+
+{% block page_content %}
+<h2>Reasignar cliente</h2>
+
+<p><strong>Cliente:</strong> {{ client.first_name }} {{ client.last_name }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="comercial">Selecciona nuevo comercial:</label>
+    <select name="comercial" id="comercial" class="form-control">
+        {% for user in comerciales %}
+            <option value="{{ user.id }}" {% if user == client.comercial %}selected{% endif %}>
+                {{ user.user.username }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+</form>
+
+<a href="{% url 'client' %}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

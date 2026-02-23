@@ -1,0 +1,58 @@
+.form-container label {
+  display: inline-block;
+  margin: 0;
+}
+
+.form-container input:not([type="checkbox"]),
+.form-container select,
+.form-container textarea {
+  margin-bottom: 18px;
+}
+
+
+.buttons-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.buttons-row button,
+.buttons-row a {
+  width: 48%;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #ffcc00;
+  color: black;
+  padding: 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #9c7f0c;
+
+}
+
+.checkbox-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.checkbox-row input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2);
+}
+
+.checkbox-row label {
+  margin: 0;
+  padding: 0;
+}

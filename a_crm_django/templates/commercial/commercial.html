@@ -1,0 +1,23 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Commercials{% endblock %}
+{% block Header_title %}COMMERCIALS{% endblock %}
+{% block page_content %}
+
+<div class="container_commercial">
+  {% for commercial in commercials %}
+  <article class="commercial" id="{{ commercial.id }}">
+    <h2>{{ commercial.user.get_full_name }}</h2>
+    <p>{{ commercial.user.email }}</p>
+
+    <h3>Clientes asociados</h3>
+    {% for client in commercial.client_set.all %}
+    <p>{{ client.first_name }} {{ client.last_name }}</p>
+    {% empty %}
+    <p>No tiene clientes asignados</p>
+    {% endfor %}
+  </article>
+  {% endfor %}
+</div>
+
+{% endblock %}

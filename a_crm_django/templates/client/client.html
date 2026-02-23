@@ -1,0 +1,34 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Client{% endblock %}
+{% block Header_title %}CLIENTE{% endblock %}
+
+{% block page_content %}
+
+<div class="container-client">
+  {% for client in clients %}
+  <article class="client" id="{{ client.id }}">
+    <h2>{{ client.first_name }} {{ client.last_name }}</h2>
+    <p>{{ client.email }}</p>
+    <p>{{ client.phone }}</p>
+    <p>{{ client.company }}</p>
+
+    <p>
+      <strong>Comercial asignado:</strong>
+      {% if client.comercial %}
+    <p>{{ client.comercial.user.username }}</p>
+    {% else %}
+    <em>Sin asignar</em>
+    {% endif %}
+    </p>
+
+    {% if client.comercial %}
+    <a class="button-action" href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm">Quitar</a>
+    <a class="button-action" href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm">Reasignar</a>
+    {% else %}
+    <a class="button-action" href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm">Asignar a mí</a>
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
