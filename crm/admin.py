@@ -10,8 +10,8 @@ from .models import Opportunity
 
 # Register your models here.
 # admin.site.register(Commercial)
-admin.site.register(ActivityLog)
-admin.site.register(Event)
+# admin.site.register(ActivityLog)
+# admin.site.register(Event)
 
 
 @admin.register(Company)
@@ -22,38 +22,38 @@ class CompanyAdmin(admin.ModelAdmin):
         'phone',
     )
 
-@admin.register(Opportunity)
-class OpportunityAdmin(admin.ModelAdmin):
-    list_display = (
-        'nombre',
-        'valor',
-        'fecha_creacion',
-        'fecha_cierre',
-        'comercial',
-        'estado',
-    )
+# @admin.register(Opportunity)
+# class OpportunityAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'nombre',
+#         'valor',
+#         'fecha_creacion',
+#         'fecha_cierre',
+#         'comercial',
+#         'estado',
+#     )
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-	list_display = (
-        'comercial',
-        'title',
-        'due_date',
-        'due_time',
-        'completed'
-    )
+# @admin.register(Task)
+# class TaskAdmin(admin.ModelAdmin):
+# 	list_display = (
+#         'comercial',
+#         'title',
+#         'due_date',
+#         'due_time',
+#         'completed'
+#     )
 
 
-@admin.register(Client)
-class ClientAdmin(admin.ModelAdmin):
-    list_display = (
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'company'
-    )
+# @admin.register(Client)
+# class ClientAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'first_name',
+#         'last_name',
+#         'email',
+#         'phone',
+#         'company'
+#     )
 
-@admin.register(Interaction)
-class InteractionAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(Interaction)
+# class InteractionAdmin(admin.ModelAdmin):
+#     pass
