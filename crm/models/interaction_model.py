@@ -8,4 +8,8 @@ class Interaction(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Interaction with {self.client.first_name} on {self.date.strftime('%Y-%m-%d %H:%M')}"
+        try:
+            return f"Interaction with {self.client.first_name} on {self.date.strftime('%Y-%m-%d %H:%M')}"
+        except:
+            return "Interaction"
+
