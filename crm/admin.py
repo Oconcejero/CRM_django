@@ -21,14 +21,13 @@ class CompanyAdmin(admin.ModelAdmin):
     )
 
 @admin.register(Opportunity)
-class Opportunity(admin.ModelAdmin):
+class OpportunityAdmin(admin.ModelAdmin):
     list_display = (
         'nombre',
         'valor',
         'fecha_creacion',
         'fecha_cierre',
         'comercial',
-        'ESTADOS_OPORTUNIDAD',
         'estado',
     )
 
