@@ -9,7 +9,7 @@ from .models.interaction_model import Interaction
 from .models import Opportunity
 
 # Register your models here.
-admin.site.register(Commercial)
+# admin.site.register(Commercial)
 admin.site.register(ActivityLog)
 admin.site.register(Event)
 
