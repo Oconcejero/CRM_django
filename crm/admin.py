@@ -54,5 +54,6 @@ class ClientAdmin(admin.ModelAdmin):
         'company'
     )
 
-from .models.interaction_model import Interaction
-admin.site.register(Interaction)
+@admin.register(Interaction)
+class InteracionAdmin(admin.ModelAdmin):
+    pass
