@@ -13,8 +13,8 @@ Puedes ver los ejercicios funcionando aquí: <br>
 🔗 https://crm-django-3l0k.onrender.com/login
 
 USUARIO EJEMPLO
-c.alcaraz@gmail.com
-usuario1234
+📧 Email: c.alcaraz@gmail.com
+🔑 Contraseña: usuario1234
 
 
 Puedes ver una vista previa en vivo de la página.
