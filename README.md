@@ -12,10 +12,11 @@ Proyecto realizado con DJANGO. CRM con datos sobre las ventas, oportunidades y p
 Puedes ver los ejercicios funcionando aquí: <br>
 🔗 https://crm-django-3l0k.onrender.com/login
 
+<div align="center">
 USUARIO EJEMPLO
 📧 Email: c.alcaraz@gmail.com
 🔑 Contraseña: usuario1234
-
+</div>
 
 Puedes ver una vista previa en vivo de la página.
 ![CRM](https://raw.githubusercontent.com/Oconcejero/CRM_django/main/a_crm_django/static/css/img/CRM_01.png)
