@@ -13,25 +13,20 @@ from django.utils import timezone
 
 
 @commercial_required
-def commercial_list_view(request):
+def client_list_view(request):
     query = request.GET.get('q')
+    clientes = Client.objects.filter(comercial=request.commercial)
     
     if query:
-        clientes_filtrados = Client.objects.filter(
+        clientes = Client.objects.filter(
             Q(first_name__icontains=query) | 
             Q(last_name__icontains=query) | 
             Q(email__icontains=query) |
             Q(company__incontains=query)
         )
         
-        commercials = Commercial.objects.prefetch_related(
-            Prefetch('client_set', queryset=clientes_filtrados)
-        ).distinct()
-    else:
-        commercials = Commercial.objects.all()
-
-    return render(request, 'commercial/commercial.html', {
-        'commercials': commercials, 
+    return render(request, 'client/client.html', {
+        'clientes': clientes, 
         'query': query
     })
 

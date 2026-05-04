@@ -6,29 +6,67 @@
 {% block page_content %}
 
 <div class="container-client">
-  {% for client in clients %}
-  <article class="client" id="{{ client.id }}">
-    <h2>{{ client.first_name }} {{ client.last_name }}</h2>
-    <p>{{ client.email }}</p>
-    <p>{{ client.phone }}</p>
-    <p>{{ client.company }}</p>
+  <!-- Buscador de Clientes -->
+  <div class="search-bar" style="margin-bottom: 25px;">
+    <form method="GET" action="" style="display: flex; gap: 10px; max-width: 600px;">
+      <input type="text" name="q" placeholder="Buscar por nombre o email..." value="{{ query|default:'' }}"
+        style="padding: 8px 12px; flex-grow: 1; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit" class="btn btn-primary" style="padding: 8px 20px;">Buscar</button>
+      {% if query %}
+      <a href="{% url 'nombre_de_esta_url' %}"
+        style="align-self: center; color: #dc3545; text-decoration: none; font-size: 0.9em;">Limpiar</a>
+      {% endif %}
+    </form>
+  </div>
 
-    <p>
-      <strong>Comercial asignado:</strong>
-      {% if client.comercial %}
-    <p>{{ client.comercial.user.username }}</p>
-    {% else %}
-    <em>Sin asignar</em>
-    {% endif %}
-    </p>
+  <!-- Tabla de resultados -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for client in clientes %}
+      <tr>
+        <td>{{ client.first_name }} {{ client.last_name }}</td>
+        <td>{{ client.email }}</td>
+        <td><a href="#">Ver detalle</a></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3">No se encontraron clientes.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
+{% for client in clients %}
+<article class="client" id="{{ client.id }}">
+  <h2>{{ client.first_name }} {{ client.last_name }}</h2>
+  <p>{{ client.email }}</p>
+  <p>{{ client.phone }}</p>
+  <p>{{ client.company }}</p>
+
+  <p>
+    <strong>Comercial asignado:</strong>
     {% if client.comercial %}
-    <a class="button-action" href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm">Quitar</a>
-    <a class="button-action" href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm">Reasignar</a>
-    {% else %}
-    <a class="button-action" href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm">Asignar a mí</a>
-    {% endif %}
-  </article>
-  {% endfor %}
+  <p>{{ client.comercial.user.username }}</p>
+  {% else %}
+  <em>Sin asignar</em>
+  {% endif %}
+  </p>
+
+  {% if client.comercial %}
+  <a class="button-action" href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm">Quitar</a>
+  <a class="button-action" href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm">Reasignar</a>
+  {% else %}
+  <a class="button-action" href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm">Asignar a mí</a>
+  {% endif %}
+</article>
+{% endfor %}
 </div>
 {% endblock %}
