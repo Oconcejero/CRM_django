@@ -38,13 +38,12 @@
         box-sizing: border-box;
         transition: transform 0.2s;
     ">
-      <h2 class="c-name" style="margin-top: 0; color: #333; font-size: 1.5em;">{{ client.first_name }} {{
-        client.last_name }}</h2>
+      <h2 class="c-name" style="margin-top: 0; color: #333; font-size: 1.5em;">{{ client.first_name }} {{ client.last_name }}</h2>
       <p style="margin: 8px 0;"><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
       <p style="margin: 8px 0;"><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
       <p style="margin: 8px 0;"><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
 
-      <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
+      <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #f7a308;">
         <small style="color: #666; font-weight: bold; text-transform: uppercase; font-size: 0.75em;">Comercial
           asignado</small>
         {% if client.comercial %}
