@@ -5,18 +5,13 @@
 
 {% block page_content %}
 
-<div class="container-client"
-  style="padding: 20px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
+<div class="container-client" style="padding: 20px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
 
   <!-- BUSCADORES (Nombre, Compañía, Email) -->
-  <div class="search-section"
-    style="width: 100%; display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
-    <input type="text" id="searchName" placeholder="Buscar por Nombre..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-    <input type="text" id="searchCompany" placeholder="Buscar por Compañía..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-    <input type="text" id="searchEmail" placeholder="Buscar por Email..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+  <div class="search-section" style="width: 100%; display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
+    <input type="text" id="searchName" placeholder="Buscar por Nombre..." style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    <input type="text" id="searchCompany" placeholder="Buscar por Compañía..." style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    <input type="text" id="searchEmail" placeholder="Buscar por Email..." style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
   </div>
 
   <!-- TARJETAS DE CLIENTES -->
@@ -47,16 +42,13 @@
         client.last_name }}</h2>
       <p style="margin: 8px 0;"><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
       <p style="margin: 8px 0;"><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
-      <p style="margin: 8px 0;"><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---"
-          }}</span></p>
+      <p style="margin: 8px 0;"><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
 
-      <div
-        style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
+      <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
         <small style="color: #666; font-weight: bold; text-transform: uppercase; font-size: 0.75em;">Comercial
           asignado</small>
         {% if client.comercial %}
-        <p style="margin: 5px 0; font-weight: bold; color: #2c3e50; font-size: 1.1em;">{{ client.comercial.user.username
-          }}</p>
+        <p style="margin: 5px 0; font-weight: bold; color: #2c3e50; font-size: 1.1em;">{{ client.comercial.user.username }}</p>
         {% else %}
         <p style="margin: 5px 0; color: #dc3545;"><em>Sin asignar</em></p>
         {% endif %}
@@ -64,13 +56,10 @@
 
       <div class="actions" style="display: flex; gap: 10px; margin-top: auto;">
         {% if client.comercial %}
-        <a href="{% url 'unassign_client' client.id %}" class="btn"
-          style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Quitar</a>
-        <a href="{% url 'reassign_client' client.id %}" class="btn"
-          style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Reasignar</a>
+        <a href="{% url 'unassign_client' client.id %}" class="btn" style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Quitar</a>
+        <a href="{% url 'reassign_client' client.id %}" class="btn" style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Reasignar</a>
         {% else %}
-        <a href="{% url 'assign_client' client.id %}" class="btn"
-          style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
+        <a href="{% url 'assign_client' client.id %}" class="btn" style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
           a mí</a>
         {% endif %}
       </div>
