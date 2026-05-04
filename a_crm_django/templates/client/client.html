@@ -5,70 +5,78 @@
 
 {% block page_content %}
 
-<div class="container-client" style="padding: 20px; width: 100%; box-sizing: border-box;">
+<div class="container-client"
+  style="padding: 20px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
 
   <!-- BUSCADORES (Nombre, Compañía, Email) -->
   <div class="search-section"
-    style="width: 100%; display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;">
+    style="width: 100%; display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
     <input type="text" id="searchName" placeholder="Buscar por Nombre..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
     <input type="text" id="searchCompany" placeholder="Buscar por Compañía..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
     <input type="text" id="searchEmail" placeholder="Buscar por Email..."
-      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
   </div>
 
   <!-- TARJETAS DE CLIENTES -->
   <div class="clients-grid" id="clientsGrid" style="
       display: flex; 
       flex-wrap: wrap; 
-      gap: 20px; 
-      justify-content: flex-start; /* Alinea clientes a la izquierda */
-      align-items: flex-start;
+      gap: 25px; 
+      width: 100%;
+      max-width: 1400px; /* Evita que se estiren demasiado en pantallas ultra anchas */
+      justify-content: center; /* ESTO CENTRA LOS RESULTADOS */
+      align-items: stretch;
   ">
     {% for client in clients %}
     <article class="client-card" id="{{ client.id }}" style="
-        /* Esto obliga a que entren 4 tarjetas por fila (100% / 4 = 25%) */
-        flex: 0 0 calc(25% - 20px); 
-        min-width: 280px; /* Para que en pantallas pequeñas no se rompan */
+        /* Ajuste para que quepan 4 (aprox 23%) o 3 según el espacio, siempre centrados */
+        flex: 0 1 320px; 
         background: white; 
         padding: 20px; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 15px; 
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         border: 1px solid #eee;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
+        transition: transform 0.2s;
     ">
       <h2 class="c-name" style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
       <p><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
       <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
       <p><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
 
-      <div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; flex-grow: 1;">
-        <strong>Comercial asignado:</strong>
+      <div
+        style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
+        <small style="color: #666; font-weight: bold; text-transform: uppercase; font-size: 0.75em;">Comercial
+          asignado</small>
         {% if client.comercial %}
-        <p style="margin: 5px 0; font-weight: bold; color: #2c3e50;">{{ client.comercial.user.username }}</p>
+        <p style="margin: 5px 0; font-weight: bold; color: #2c3e50; font-size: 1.1em;">{{ client.comercial.user.username
+          }}</p>
         {% else %}
-        <p style="margin: 5px 0; color: #e74c3c;"><em>Sin asignar</em></p>
+        <p style="margin: 5px 0; color: #dc3545;"><em>Sin asignar</em></p>
         {% endif %}
       </div>
 
       <div class="actions" style="display: flex; gap: 10px; margin-top: auto;">
         {% if client.comercial %}
-        <a href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm"
-          style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #ffc107; color: black; border-radius: 4px;">Quitar</a>
-        <a href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm"
-          style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #6c757d; color: white; border-radius: 4px;">Reasignar</a>
+        <a href="{% url 'unassign_client' client.id %}" class="btn"
+          style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Quitar</a>
+        <a href="{% url 'reassign_client' client.id %}" class="btn"
+          style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Reasignar</a>
         {% else %}
-        <a href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm"
-          style="flex: 1; text-align: center; text-decoration: none; padding: 10px; background: #007bff; color: white; border-radius: 4px; font-weight: bold;">Asignar
+        <a href="{% url 'assign_client' client.id %}" class="btn"
+          style="flex: 1; text-align: center; background: #007bff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
           a mí</a>
         {% endif %}
       </div>
     </article>
     {% empty %}
-    <p>No hay clientes registrados en el sistema.</p>
+    <div style="width: 100%; text-align: center; padding: 50px; color: #888;">
+      <h3>No hay clientes registrados</h3>
+    </div>
     {% endfor %}
   </div>
 </div>
