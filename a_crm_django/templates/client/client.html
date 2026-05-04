@@ -6,47 +6,23 @@
 {% block page_content %}
 
 <div class="container-client" style="padding: 20px;">
-  <!-- Buscador de Clientes -->
+  <!-- BUSCADOR -->
   <div class="search-bar" style="margin-bottom: 30px;">
     <input type="text" id="liveSearch" placeholder="Empieza a escribir para filtrar clientes..."
       style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
   </div>
 
-  <!-- Tabla de resultados -->
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for client in clientes %}
-      <tr>
-        <td>{{ client.first_name }} {{ client.last_name }}</td>
-        <td>{{ client.email }}</td>
-        <td><a href="#">Ver detalle</a></td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="3">No se encontraron clientes.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-<div class="clients-grid" id="clientsGrid" style="
+  <!-- CUADRÍCULA CLIENTES -->
+  <div class="clients-grid" id="clientsGrid" style="
       display: flex; 
       flex-wrap: wrap; 
       gap: 20px; 
-      justify-content: center; /* Centra las tarjetas en la pantalla */
+      justify-content: flex-start; /* Se alinean ordenadamente desde la izquierda */
       align-items: stretch;
   ">
-  {% for client in clientes %}
-  <article class="client-card" id="{{ client.id }}" style="
-        flex: 0 1 300px; /* Ancho fijo para que quepan varios por fila */
+    {% for client in clientes %}
+    <article class="client-card" id="{{ client.id }}" style="
+        flex: 0 1 300px; 
         background: white; 
         padding: 20px; 
         border-radius: 10px; 
@@ -55,48 +31,53 @@
         display: flex;
         flex-direction: column;
     ">
-    <h2 style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
-    <p><strong>Email:</strong> {{ client.email }}</p>[cite: 4]
-    <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>[cite: 4]
-    <p><strong>Empresa:</strong> {{ client.company|default:"---" }}</p>[cite: 4]
+      <h2 style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
+      <p><strong>Email:</strong> {{ client.email }}</p>
+      <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
+      <p><strong>Empresa:</strong> {{ client.company|default:"---" }}</p>
 
-    <div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; flex-grow: 1;">
-      <strong>Comercial asignado:</strong>
-      {% if client.comercial %}
-      <p style="margin: 5px 0; font-weight: bold; color: #2c3e50;">{{ client.comercial.user.username }}</p>[cite: 4]
-      {% else %}
-      <p style="margin: 5px 0; color: #e74c3c;"><em>Sin asignar</em></p>[cite: 4]
-      {% endif %}
+      <div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; flex-grow: 1;">
+        <strong>Comercial asignado:</strong>
+        {% if client.comercial %}
+        <p style="margin: 5px 0; font-weight: bold; color: #2c3e50;">{{ client.comercial.user.username }}</p>
+        {% else %}
+        <p style="margin: 5px 0; color: #e74c3c;"><em>Sin asignar</em></p>
+        {% endif %}
+      </div>
+
+      <div class="actions" style="display: flex; gap: 10px; margin-top: auto;">
+        {% if client.comercial %}
+        <a href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm"
+          style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #ffc107; color: black; border-radius: 4px;">Quitar</a>
+        <a href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm"
+          style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #6c757d; color: white; border-radius: 4px;">Reasignar</a>
+        {% else %}
+        <a href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm"
+          style="flex: 1; text-align: center; text-decoration: none; padding: 10px; background: #007bff; color: white; border-radius: 4px; font-weight: bold;">Asignar
+          a mí</a>
+        {% endif %}
+      </div>
+    </article>
+    {% empty %}
+    <div style="width: 100%; text-align: center; margin-top: 20px; color: #666;">
+      <p>No hay clientes en la base de datos. ¡Añade uno para empezar!</p>
     </div>
-
-    <div class="actions" style="display: flex; gap: 10px; margin-top: auto;">
-      {% if client.comercial %}
-      <a href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm"
-        style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #ffc107; color: black; border-radius: 4px;">Quitar</a>[cite:
-      4]
-      <a href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm"
-        style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #6c757d; color: white; border-radius: 4px;">Reasignar</a>[cite:
-      4]
-      {% else %}
-      <a href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm"
-        style="flex: 1; text-align: center; text-decoration: none; padding: 10px; background: #007bff; color: white; border-radius: 4px; font-weight: bold;">Asignar
-        a mí</a>[cite: 4]
-      {% endif %}
-    </div>
-  </article>
-  {% empty %}
-  <p>No se encontraron clientes.</p>
-  {% endfor %}
-</div>
+    {% endfor %}
+  </div>
 </div>
 
-<!-- SCRIPT PARA EL BUSCADOR -->
+<!-- BUSCADOR EN TIEMPO REAL -->
 <script>
   document.getElementById('liveSearch').addEventListener('input', function (e) {
     const text = e.target.value.toLowerCase();
     const cards = document.querySelectorAll('.client-card');
+
     cards.forEach(card => {
-      card.style.display = card.textContent.toLowerCase().includes(text) ? 'flex' : 'none';
+      if (card.textContent.toLowerCase().includes(text)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
     });
   });
 </script>
