@@ -5,22 +5,15 @@
 
 {% block page_content %}
 
-<div class="container-client" style="padding: 20px; width: 100%;">
+<div class="container-client" style="padding: 20px; width: 100%; box-sizing: border-box;">
 
   <!-- BUSCADORES (Nombre, Compañía, Email) -->
-  <div class="search-section" style="
-      width: 100%; 
-      display: flex; 
-      justify-content: center; /* Centra los buscadores como en tu imagen */
-      gap: 10px; 
-      margin-bottom: 40px; /* Espacio de sobra con los clientes */
-  ">
+  <div class="search-section"
+    style="width: 100%; display: flex; justify-content: center; gap: 10px; margin-bottom: 40px;">
     <input type="text" id="searchName" placeholder="Buscar por Nombre..."
       style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
-
     <input type="text" id="searchCompany" placeholder="Buscar por Compañía..."
       style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
-
     <input type="text" id="searchEmail" placeholder="Buscar por Email..."
       style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
   </div>
@@ -35,7 +28,9 @@
   ">
     {% for client in clients %}
     <article class="client-card" id="{{ client.id }}" style="
-        flex: 0 1 320px; /* Mantiene el tamaño de tarjeta */
+        /* Esto obliga a que entren 4 tarjetas por fila (100% / 4 = 25%) */
+        flex: 0 0 calc(25% - 20px); 
+        min-width: 280px; /* Para que en pantallas pequeñas no se rompan */
         background: white; 
         padding: 20px; 
         border-radius: 12px; 
@@ -43,7 +38,7 @@
         border: 1px solid #eee;
         display: flex;
         flex-direction: column;
-        min-height: 380px;
+        box-sizing: border-box;
     ">
       <h2 class="c-name" style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
       <p><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
