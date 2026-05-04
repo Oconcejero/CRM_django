@@ -5,18 +5,11 @@
 
 {% block page_content %}
 
-<div class="container-client">
+<div class="container-client" style="padding: 20px;">
   <!-- Buscador de Clientes -->
-  <div class="search-bar" style="margin-bottom: 25px;">
-    <form method="GET" action="" style="display: flex; gap: 10px; max-width: 600px;">
-      <input type="text" name="q" placeholder="Buscar por nombre o email..." value="{{ query|default:'' }}"
-        style="padding: 8px 12px; flex-grow: 1; border: 1px solid #ccc; border-radius: 4px;">
-      <button type="submit" class="btn btn-primary" style="padding: 8px 20px;">Buscar</button>
-      {% if query %}
-      <a href="{% url 'nombre_de_esta_url' %}"
-        style="align-self: center; color: #dc3545; text-decoration: none; font-size: 0.9em;">Limpiar</a>
-      {% endif %}
-    </form>
+  <div class="search-bar" style="margin-bottom: 30px;">
+    <input type="text" id="liveSearch" placeholder="Empieza a escribir para filtrar clientes..."
+      style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
   </div>
 
   <!-- Tabla de resultados -->
@@ -44,29 +37,67 @@
   </table>
 </div>
 
-{% for client in clients %}
-<article class="client" id="{{ client.id }}">
-  <h2>{{ client.first_name }} {{ client.last_name }}</h2>
-  <p>{{ client.email }}</p>
-  <p>{{ client.phone }}</p>
-  <p>{{ client.company }}</p>
+<div class="clients-grid" id="clientsGrid" style="
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 20px; 
+      justify-content: center; /* Centra las tarjetas en la pantalla */
+      align-items: stretch;
+  ">
+  {% for client in clientes %}
+  <article class="client-card" id="{{ client.id }}" style="
+        flex: 0 1 300px; /* Ancho fijo para que quepan varios por fila */
+        background: white; 
+        padding: 20px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+    ">
+    <h2 style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
+    <p><strong>Email:</strong> {{ client.email }}</p>[cite: 4]
+    <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>[cite: 4]
+    <p><strong>Empresa:</strong> {{ client.company|default:"---" }}</p>[cite: 4]
 
-  <p>
-    <strong>Comercial asignado:</strong>
-    {% if client.comercial %}
-  <p>{{ client.comercial.user.username }}</p>
-  {% else %}
-  <em>Sin asignar</em>
-  {% endif %}
-  </p>
+    <div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; flex-grow: 1;">
+      <strong>Comercial asignado:</strong>
+      {% if client.comercial %}
+      <p style="margin: 5px 0; font-weight: bold; color: #2c3e50;">{{ client.comercial.user.username }}</p>[cite: 4]
+      {% else %}
+      <p style="margin: 5px 0; color: #e74c3c;"><em>Sin asignar</em></p>[cite: 4]
+      {% endif %}
+    </div>
 
-  {% if client.comercial %}
-  <a class="button-action" href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm">Quitar</a>
-  <a class="button-action" href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm">Reasignar</a>
-  {% else %}
-  <a class="button-action" href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm">Asignar a mí</a>
-  {% endif %}
-</article>
-{% endfor %}
+    <div class="actions" style="display: flex; gap: 10px; margin-top: auto;">
+      {% if client.comercial %}
+      <a href="{% url 'unassign_client' client.id %}" class="btn btn-warning btn-sm"
+        style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #ffc107; color: black; border-radius: 4px;">Quitar</a>[cite:
+      4]
+      <a href="{% url 'reassign_client' client.id %}" class="btn btn-secondary btn-sm"
+        style="flex: 1; text-align: center; text-decoration: none; padding: 8px; background: #6c757d; color: white; border-radius: 4px;">Reasignar</a>[cite:
+      4]
+      {% else %}
+      <a href="{% url 'assign_client' client.id %}" class="btn btn-primary btn-sm"
+        style="flex: 1; text-align: center; text-decoration: none; padding: 10px; background: #007bff; color: white; border-radius: 4px; font-weight: bold;">Asignar
+        a mí</a>[cite: 4]
+      {% endif %}
+    </div>
+  </article>
+  {% empty %}
+  <p>No se encontraron clientes.</p>
+  {% endfor %}
 </div>
+</div>
+
+<!-- SCRIPT PARA EL BUSCADOR -->
+<script>
+  document.getElementById('liveSearch').addEventListener('input', function (e) {
+    const text = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.client-card');
+    cards.forEach(card => {
+      card.style.display = card.textContent.toLowerCase().includes(text) ? 'flex' : 'none';
+    });
+  });
+</script>
 {% endblock %}
