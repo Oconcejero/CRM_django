@@ -43,10 +43,12 @@
         box-sizing: border-box;
         transition: transform 0.2s;
     ">
-      <h2 class="c-name" style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
-      <p><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
-      <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
-      <p><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
+      <h2 class="c-name" style="margin-top: 0; color: #333; font-size: 1.5em;">{{ client.first_name }} {{
+        client.last_name }}</h2>
+      <p style="margin: 8px 0;"><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
+      <p style="margin: 8px 0;"><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
+      <p style="margin: 8px 0;"><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---"
+          }}</span></p>
 
       <div
         style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
@@ -68,7 +70,7 @@
           style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Reasignar</a>
         {% else %}
         <a href="{% url 'assign_client' client.id %}" class="btn"
-          style="flex: 1; text-align: center; background: #ffc107; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
+          style="flex: 1; text-align: center; background: #ffc107; color: black; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
           a mí</a>
         {% endif %}
       </div>
@@ -83,27 +85,25 @@
 
 <!-- SCRIPT BUSCADORES -->
 <script>
-  const searchName = document.getElementById('searchName');
-  const searchCompany = document.getElementById('searchCompany');
-  const searchEmail = document.getElementById('searchEmail');
+  const inputs = [
+    document.getElementById('searchName'),
+    document.getElementById('searchCompany'),
+    document.getElementById('searchEmail')
+  ];
 
-  function filterClients() {
-    const nameVal = searchName.value.toLowerCase();
-    const compVal = searchCompany.value.toLowerCase();
-    const emailVal = searchEmail.value.toLowerCase();
+  function filter() {
+    const nVal = inputs[0].value.toLowerCase();
+    const cVal = inputs[1].value.toLowerCase();
+    const mVal = inputs[2].value.toLowerCase();
 
     const cards = document.querySelectorAll('.client-card');
 
     cards.forEach(card => {
-      const nameText = card.querySelector('.c-name').textContent.toLowerCase();
-      const compText = card.querySelector('.c-company').textContent.toLowerCase();
-      const emailText = card.querySelector('.c-email').textContent.toLowerCase();
+      const name = card.querySelector('.c-name').textContent.toLowerCase();
+      const comp = card.querySelector('.c-company').textContent.toLowerCase();
+      const mail = card.querySelector('.c-email').textContent.toLowerCase();
 
-      const matchesName = nameText.includes(nameVal);
-      const matchesComp = compText.includes(compVal);
-      const matchesEmail = emailText.includes(emailVal);
-
-      if (matchesName && matchesComp && matchesEmail) {
+      if (name.includes(nVal) && comp.includes(cVal) && mail.includes(mVal)) {
         card.style.display = 'flex';
       } else {
         card.style.display = 'none';
@@ -111,10 +111,6 @@
     });
   }
 
-  // Ejecutar el filtro cada vez que escribas en cualquier campo
-  searchName.addEventListener('input', filterClients);
-  searchCompany.addEventListener('input', filterClients);
-  searchEmail.addEventListener('input', filterClients);
+  inputs.forEach(i => i.addEventListener('input', filter));
 </script>
-
 {% endblock %}
