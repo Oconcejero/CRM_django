@@ -6,23 +6,29 @@
 {% block page_content %}
 
 <div class="container-client" style="padding: 20px;">
-  <!-- BUSCADOR -->
-  <div class="search-bar" style="margin-bottom: 30px;">
-    <input type="text" id="liveSearch" placeholder="Empieza a escribir para filtrar clientes..."
-      style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+
+  <!-- BUSCADORES (Nombre, Compañía, Email) -->
+  <div class="search-section" style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+    <input type="text" id="searchName" placeholder="Buscar por Nombre..."
+      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+
+    <input type="text" id="searchCompany" placeholder="Buscar por Compañía..."
+      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+
+    <input type="text" id="searchEmail" placeholder="Buscar por Email..."
+      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
   </div>
 
-  <!-- CUADRÍCULA CLIENTES -->
+  <!-- TARJETAS DE CLIENTES -->
   <div class="clients-grid" id="clientsGrid" style="
       display: flex; 
       flex-wrap: wrap; 
       gap: 20px; 
-      justify-content: flex-start; /* Se alinean ordenadamente desde la izquierda */
-      align-items: stretch;
+      justify-content: flex-start;
   ">
-    {% for client in clientes %}
+    {% for client in clients %}
     <article class="client-card" id="{{ client.id }}" style="
-        flex: 0 1 300px; 
+        flex: 0 1 320px; /* Tamaño de la tarjeta para que queden uno tras otro */
         background: white; 
         padding: 20px; 
         border-radius: 10px; 
@@ -31,10 +37,10 @@
         display: flex;
         flex-direction: column;
     ">
-      <h2 style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
-      <p><strong>Email:</strong> {{ client.email }}</p>
+      <h2 class="c-name" style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
+      <p><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
       <p><strong>Tel:</strong> {{ client.phone|default:"---" }}</p>
-      <p><strong>Empresa:</strong> {{ client.company|default:"---" }}</p>
+      <p><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
 
       <div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border-radius: 5px; flex-grow: 1;">
         <strong>Comercial asignado:</strong>
@@ -59,26 +65,45 @@
       </div>
     </article>
     {% empty %}
-    <div style="width: 100%; text-align: center; margin-top: 20px; color: #666;">
-      <p>No hay clientes en la base de datos. ¡Añade uno para empezar!</p>
-    </div>
+    <p>No hay clientes registrados en el sistema.</p>
     {% endfor %}
   </div>
 </div>
 
-<!-- BUSCADOR EN TIEMPO REAL -->
+<!-- SCRIPT BUSCADORES -->
 <script>
-  document.getElementById('liveSearch').addEventListener('input', function (e) {
-    const text = e.target.value.toLowerCase();
+  const searchName = document.getElementById('searchName');
+  const searchCompany = document.getElementById('searchCompany');
+  const searchEmail = document.getElementById('searchEmail');
+
+  function filterClients() {
+    const nameVal = searchName.value.toLowerCase();
+    const compVal = searchCompany.value.toLowerCase();
+    const emailVal = searchEmail.value.toLowerCase();
+
     const cards = document.querySelectorAll('.client-card');
 
     cards.forEach(card => {
-      if (card.textContent.toLowerCase().includes(text)) {
+      const nameText = card.querySelector('.c-name').textContent.toLowerCase();
+      const compText = card.querySelector('.c-company').textContent.toLowerCase();
+      const emailText = card.querySelector('.c-email').textContent.toLowerCase();
+
+      const matchesName = nameText.includes(nameVal);
+      const matchesComp = compText.includes(compVal);
+      const matchesEmail = emailText.includes(emailVal);
+
+      if (matchesName && matchesComp && matchesEmail) {
         card.style.display = 'flex';
       } else {
         card.style.display = 'none';
       }
     });
-  });
+  }
+
+  // Ejecutar el filtro cada vez que escribas en cualquier campo
+  searchName.addEventListener('input', filterClients);
+  searchCompany.addEventListener('input', filterClients);
+  searchEmail.addEventListener('input', filterClients);
 </script>
+
 {% endblock %}
