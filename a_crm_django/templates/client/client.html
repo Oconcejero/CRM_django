@@ -5,18 +5,24 @@
 
 {% block page_content %}
 
-<div class="container-client" style="padding: 20px;">
+<div class="container-client" style="padding: 20px; width: 100%;">
 
   <!-- BUSCADORES (Nombre, Compañía, Email) -->
-  <div class="search-section" style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+  <div class="search-section" style="
+      width: 100%; 
+      display: flex; 
+      justify-content: center; /* Centra los buscadores como en tu imagen */
+      gap: 10px; 
+      margin-bottom: 40px; /* Espacio de sobra con los clientes */
+  ">
     <input type="text" id="searchName" placeholder="Buscar por Nombre..."
-      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
 
     <input type="text" id="searchCompany" placeholder="Buscar por Compañía..."
-      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
 
     <input type="text" id="searchEmail" placeholder="Buscar por Email..."
-      style="flex: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;">
+      style="width: 250px; padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 45px;">
   </div>
 
   <!-- TARJETAS DE CLIENTES -->
@@ -24,18 +30,20 @@
       display: flex; 
       flex-wrap: wrap; 
       gap: 20px; 
-      justify-content: flex-start;
+      justify-content: flex-start; /* Alinea clientes a la izquierda */
+      align-items: flex-start;
   ">
     {% for client in clients %}
     <article class="client-card" id="{{ client.id }}" style="
-        flex: 0 1 320px; /* Tamaño de la tarjeta para que queden uno tras otro */
+        flex: 0 1 320px; /* Mantiene el tamaño de tarjeta */
         background: white; 
         padding: 20px; 
-        border-radius: 10px; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-radius: 12px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         border: 1px solid #eee;
         display: flex;
         flex-direction: column;
+        min-height: 380px;
     ">
       <h2 class="c-name" style="margin-top: 0;">{{ client.first_name }} {{ client.last_name }}</h2>
       <p><strong>Email:</strong> <span class="c-email">{{ client.email }}</span></p>
