@@ -49,7 +49,7 @@
       <p><strong>Empresa:</strong> <span class="c-company">{{ client.company|default:"---" }}</span></p>
 
       <div
-        style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #ffc107;">
+        style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; flex-grow: 1; border-left: 4px solid #007bff;">
         <small style="color: #666; font-weight: bold; text-transform: uppercase; font-size: 0.75em;">Comercial
           asignado</small>
         {% if client.comercial %}
@@ -68,7 +68,7 @@
           style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9em;">Reasignar</a>
         {% else %}
         <a href="{% url 'assign_client' client.id %}" class="btn"
-          style="flex: 1; text-align: center; background: #007bff; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
+          style="flex: 1; text-align: center; background: #ffc107; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1em; box-shadow: 0 4px 6px rgba(0,123,255,0.2);">Asignar
           a mí</a>
         {% endif %}
       </div>
