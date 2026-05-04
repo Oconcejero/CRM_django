@@ -1,0 +1,19 @@
+# Entorno virtual
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Variables de entorno (¡Muy importante para Supabase!)
+.env
+
+# Base de datos local (por si usas SQLite en algún momento)
+db.sqlite3
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
