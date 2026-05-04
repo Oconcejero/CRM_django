@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from crm.views.decoratos import commercial_required
 from crm.models import Client, Prospect, Opportunity, Commercial
 from datetime import datetime
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q, Prefetch
 from django.db.models.functions import ExtractMonth
 from crm.forms.forms import OpportunityForm,ClientForm
 from crm.models.task_model import Task
@@ -10,6 +10,31 @@ from crm.models.event_model import Event
 from crm.models.activity_log_model import ActivityLog
 from django.http import JsonResponse
 from django.utils import timezone
+
+
+@commercial_required
+def commercial_list_view(request):
+    query = request.GET.get('q')
+    
+    if query:
+        clientes_filtrados = Client.objects.filter(
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query) | 
+            Q(email__icontains=query) |
+            Q(company__incontains=query)
+        )
+        
+        commercials = Commercial.objects.prefetch_related(
+            Prefetch('client_set', queryset=clientes_filtrados)
+        ).distinct()
+    else:
+        commercials = Commercial.objects.all()
+
+    return render(request, 'commercial/commercial.html', {
+        'commercials': commercials, 
+        'query': query
+    })
+
 
 
 @commercial_required

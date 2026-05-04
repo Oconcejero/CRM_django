@@ -5,6 +5,21 @@
 {% block page_content %}
 
 <div class="container_commercial">
+  <!--BUSCADOR-->
+  <div class="search-bar" style="margin-bottom: 30px; width: 100%;">
+    <form method="GET" action="" style="display: flex; gap: 10px;">
+      <input type="text" name="q" placeholder="Buscar cliente por nombre o email..." value="{{ query|default:'' }}"
+        style="padding: 10px; flex-grow: 1; border-radius: 5px; border: 1px solid #ddd;">
+      <button type="submit" class="btn btn-primary"
+        style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        Buscar
+      </button>
+      {% if query %}
+      <a href="." style="padding: 10px; color: #666; text-decoration: none;">Limpiar</a>
+      {% endif %}
+    </form>
+  </div>
+
   {% for commercial in commercials %}
   <article class="commercial" id="{{ commercial.id }}">
     <h2>{{ commercial.user.get_full_name }}</h2>
