@@ -1,0 +1,20 @@
+{% extends "general/layout.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Guardar Interacción{% endblock %}
+{% block Header_title %}DATOS DE INTERACCIÓN{% endblock %}
+
+{% block page_content %}
+<div class="container" style="padding: 20px; max-width: 600px; margin: auto; background: white; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 30px;">
+
+  <form method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    <div style="display: flex; gap: 15px; margin-top: 25px;">
+      <button type="submit" style="flex: 1; background: #28a745; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Guardar</button>
+      <a href="{% url 'interactions' %}" style="flex: 1; text-align: center; background: #6c757d; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold;">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

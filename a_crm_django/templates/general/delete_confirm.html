@@ -1,0 +1,17 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+{% block Header_title %}ELIMINAR REGISTRO{% endblock %}
+
+{% block page_content %}
+<div class="container" style="text-align: center; margin-top: 50px; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin-left: auto; margin-right: auto;">
+  <h2 style="color: #dc3545; margin-bottom: 20px;">¿Estás seguro?</h2>
+  <p style="font-size: 1.2em; margin-bottom: 30px;">Vas a eliminar permanentemente: <strong>{{ obj }}</strong></p>
+
+  <form method="POST" style="display: flex; justify-content: center; gap: 15px;">
+    {% csrf_token %}
+    <button type="submit" style="background: #dc3545; color: white; padding: 10px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Sí, eliminar</button>
+    <a href="{% url cancel_url %}" style="background: #6c757d; color: white; padding: 10px 25px; text-decoration: none; border-radius: 8px; font-weight: bold;">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

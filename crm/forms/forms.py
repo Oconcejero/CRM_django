@@ -3,6 +3,7 @@ from crm.models import Opportunity,Client, Company
 from crm.models.task_model import Task
 from crm.models.event_model import Event
 from django.forms import DateInput, TimeInput, DateTimeInput
+from crm.models.interaction_model import Interaction
 
 
 class OpportunityForm(forms.ModelForm):
@@ -79,3 +80,15 @@ class ClientForm(forms.ModelForm):
             client.save()
 
         return client
+    
+class InteractionForm(forms.ModelForm):
+    class Meta:
+        model = Interaction
+        fields = ['client', 'notes']
+        labels = {
+            'client': 'Cliente Relacionado',
+            'notes': 'Notas de la reunión o llamada'
+        }
+        widgets = {
+            'notes': forms.Textarea(attrs={'rows': 4}),
+        }

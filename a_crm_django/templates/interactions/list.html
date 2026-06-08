@@ -1,0 +1,31 @@
+{% extends "general/layout.html" %}
+
+{% block title %}Interacciones{% endblock %}
+{% block Header_title %}INTERACCIONES{% endblock %}
+
+{% block page_content %}
+<div class="container" style="padding: 20px; max-width: 1000px; margin: auto;">
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+    <a href="{% url 'interaction_add' %}" style="background: #28a745; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">+ Añadir Interacción</a>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 15px;">
+    {% for interaction in interactions %}
+    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #2c3e50;">
+      <h4 style="margin-top: 0; color: #333;">Cliente: {{ interaction.client.first_name }} {{ interaction.client.last_name }}</h4>
+      <p style="margin: 5px 0; color: #666;"><small><strong>Fecha:</strong> {{ interaction.date|date:"d/m/Y H:i" }}</small></p>
+      <p style="margin: 15px 0; background: #f8f9fa; padding: 10px; border-radius: 5px;">{{ interaction.notes|default:"Sin notas adicionales." }}</p>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="{% url 'interaction_edit' interaction.id %}" style="background: #17a2b8; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9em;">Editar</a>
+        <a href="{% url 'interaction_delete' interaction.id %}" style="background: #dc3545; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9em;">Eliminar</a>
+      </div>
+    </div>
+    {% empty %}
+    <div style="text-align: center; padding: 40px; color: #888;">
+      <h3>No hay interacciones registradas aún.</h3>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
